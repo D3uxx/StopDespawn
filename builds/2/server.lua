@@ -5,9 +5,9 @@ function dprint(msg)
 	end
 end
 
-local vehicles = {} -- Table where all the vehicle data will be saved.
+local vehicles = {} -- Tabla donde se guardan todos los datos de los vehiculos.
 
--- Event to replace the id of the despawned vehicle with the id of the replaced vehicle.
+-- Evento para reemplazar la ID del coche despawneado por el nuevo.
 RegisterServerEvent('sd:updateId')
 AddEventHandler('sd:updateId', function(oldId, newId)
 	for i=1,#vehicles,1 do
@@ -17,7 +17,7 @@ AddEventHandler('sd:updateId', function(oldId, newId)
 	end
 end)
 
--- Completes the saving by inserting all the info in the table.
+-- Completa/ejecuta la inserción añadiendo los detalles del vehiculo.
 function insert(index, id, model, x, y, z, heading)
 	vehicles[index] = {
 		['id'] = id,
@@ -31,23 +31,23 @@ function insert(index, id, model, x, y, z, heading)
 	}
 end
 
--- Event to evaluate where should every vehicle be saved in the table.
+-- Evento para evaluar donde debe guardarse la tupla en la tabla.
 RegisterServerEvent('sd:save')
 AddEventHandler('sd:save', function(id, model, x, y, z, heading)
 	if vehicles[1] then
 		for i=1,#vehicles,1 do
 			if vehicles[i].id == id then
 				insert(i, id, model, x, y, z, heading)
-				dprint(model .. '(' .. id ..')' .. 'updated!')
+				dprint(model .. '(' .. id ..')' .. '¡actualizado!')
 				break
 			elseif i == #vehicles then
 				insert(#vehicles+1, id, model, x, y, z, heading)
-				dprint(model .. '(' .. id ..')' .. 'added!')
+				dprint(model .. '(' .. id ..')' .. '¡añadido!')
 			end
 		end
 	else
 		insert(#vehicles+1, id, model, x, y, z, heading)
-		dprint(model .. '(' .. id ..')' .. 'added!')
+		dprint(model .. '(' .. id ..')' .. '¡añadido!')
 	end
 end)
 

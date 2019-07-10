@@ -5,7 +5,7 @@ function dprint(msg)
 	end
 end
 
--- Spawn the vehicle with the given properties.
+-- Hacer spawn del vehiculo con los siguientes argumentos.
 function spawnVehicle(model, x, y, z, heading)
 	RequestModel(model)
 	while not HasModelLoaded(model) do
@@ -24,7 +24,7 @@ AddEventHandler('sd:save', function(vehicle)
 	TriggerServerEvent('sd:save', vehicle, model, x, y, z, heading)
 end)
 
--- Trigger vehicle save (set interval in config)
+-- Trigger para el "guardado" de vehiculos
 Citizen.CreateThread(function()
 	ped = GetPlayerPed(-1)
 	local vehicle = 0
@@ -47,7 +47,7 @@ Citizen.CreateThread(function()
 	end
 end)
 
--- Check which saved ids don't match with the corresponding models to detect despawned vehicles.
+-- Verificacion en caso de que las ID's no casen con los vehiculos actuales, luego están despawneados.
 RegisterNetEvent('sd:checkVehs')
 AddEventHandler('sd:checkVehs', function(table)
 	local results = {
@@ -63,13 +63,13 @@ AddEventHandler('sd:checkVehs', function(table)
 		end
 		results.total = results.total + 1
 	end
-	dprint(results.restored .. '/' .. results.total .. ' vehicles have been restored!')
+	dprint(results.restored .. '/' .. results.total .. ' vehiculos han sido restablecidos')
 end)
 
--- Trigger despawn check (set interval in config).
+-- Trigger para el check del despawn.
 Citizen.CreateThread(function()
 	while true do
-		dprint('Retrieving table...')
+		dprint('Buscando la tabla...')
 		TriggerServerEvent('sd:retrieveTable')
 		Citizen.Wait(intervals.check*1000)
 	end
